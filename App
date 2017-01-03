@@ -1,0 +1,104 @@
+import java.util.*;
+import java.io.*;
+import java.net.*;
+public class App {
+
+	public static void main(String[] args) {
+		ArrayList<Spiller> spillerliste = new ArrayList();
+		lesInfo(spillerliste);
+		for (int i = 0; i < spillerliste.size();i++){
+			System.out.println(spillerliste.get(i));
+		}
+		
+
+	}
+	public static void lesInfo(ArrayList<Spiller> spillerliste){
+		String url = "https://fantasy.premierleague.com/drf/bootstrap-static";
+		try{
+			//URL link = new URL (url);
+			//Scanner read = new Scanner(link.openStream());
+			String filc = "fantasytekst.txt";
+			File fil = new File(filc);
+			Scanner read = new Scanner(fil);
+			String fant = read.nextLine();
+			String[] fanta = fant.split("\\[");
+			String[] fantasy = fanta[2].split("\\{");
+			lagSpillere(fantasy, spillerliste);
+		} catch (IOException IOfeil) {
+			System.out.println("IO-feil");
+
+		}
+	}
+	public static void lagSpillere(String[] fantasy, ArrayList<Spiller> spillerliste){
+		for (int i = 1; i<29;i++){
+			String[] s = fantasy[i].split("\"");
+			String lagnavn = bestemLag(s[12]);
+			double pris = Double.parseDouble(s[34].substring(1, 3));
+			int poeng = Integer.parseInt(s[84].substring(1, 2));
+			Spiller temp = new Spiller(s[9], lagnavn, pris, poeng);
+			spillerliste.add(temp);
+			}
+		}
+	public static String bestemLag(String lag){
+		String s = lag.substring(1);
+		int lagtall;
+		if (s.charAt(1) == ','){
+			lagtall = Integer.parseInt(s.substring(0, 1));
+		} else if (s.charAt(2) == ','){
+			lagtall = Integer.parseInt(s.substring(0, 2));
+		} else {
+			lagtall = Integer.parseInt(s.substring(0, 3));
+		}
+		String retur = tallTilLag(lagtall);
+		return retur;
+	}
+	public static String tallTilLag(int lag){
+			String retur;
+			switch (lag) {
+				case 3: retur = "Arsenal";
+				break;
+				case 8: retur = "Chelsea";
+				break;
+				case 14: retur = "Liverpool";
+				break;
+				case 43: retur = "Manchester City";
+				break;
+				case 6: retur = "Spurs";
+				break;
+				case 1: retur = "Manchester United";
+				break;
+				case 20: retur = "Southampton";
+				break;
+				case 35: retur = "West Bromwich";
+				break;
+				case 11: retur = "Everton";
+				break;
+				case 91: retur = "Bournemouth";
+				break;
+				case 110: retur = "Stoke";
+				break;
+				case 57: retur = "Watford";
+				break;
+				case 21: retur = "West Ham";
+				break;
+				case 25: retur = "Middelsbrough";
+				break;
+				case 13: retur = "Leicester";
+				break;
+				case 90: retur = "Burnley";
+				break;
+				case 31: retur = "Crystal Palace";
+				break;
+				case 56: retur = "Sunderland";
+				break;
+				case 80: retur = "Swansea";
+				break;
+				case 88: retur = "Hull";
+				break;
+				default: retur = "Ukjent lag";
+				break;
+			}
+		return retur;
+	}
+
+}
