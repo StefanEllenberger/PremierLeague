@@ -1,0 +1,32 @@
+
+public class Spiller {
+	//variabler
+	private String navn;
+	private String lag;
+	private double pris;
+	private int poeng;
+	
+	//konstruktor
+	public Spiller(String navn, String lag, double pris, int poeng){
+		this.navn = navn;
+		this.lag = lag;
+		this.pris = pris;
+		this.poeng = poeng;
+	}
+	//metoder
+	public String toString(){
+		String utskrift = this.navn + "\t";
+		if (utskrift.length()<9){
+			utskrift+="\t";
+		}
+		if (this.lag.length() < 8){
+			utskrift += this.lag + "\t\t";
+		} else {
+			utskrift += this.lag + "\t";
+		}
+		utskrift += "£" + (this.pris / 10) + "\t";
+		//utskrift += this.poeng + "p";
+		return utskrift;
+	}
+
+}
